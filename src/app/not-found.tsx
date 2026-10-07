@@ -1,0 +1,2 @@
+import { Container, PrimaryButton, SecondaryButton } from '@/components/ui';
+export default function NotFound() { return <section className="section"><Container><p className="eyebrow">PAGE NOT FOUND</p><h1>Let’s help you find your way.</h1><p className="intro">This page may have moved. You can return home or get in touch about care.</p><div className="hero-buttons"><SecondaryButton href="/">Return Home</SecondaryButton><PrimaryButton /></div></Container></section>; }

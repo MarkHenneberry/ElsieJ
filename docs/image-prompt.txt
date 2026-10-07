@@ -1,0 +1,5 @@
+Tool: built-in imagegen
+Use case: photorealistic-natural. Asset type: home-care website lifestyle photo, landscape 3:2. A candid editorial photograph of an older woman with short silver hair and a middle-aged female home support companion wearing a soft lavender casual blouse, seated together at a wooden kitchen table in a comfortable lived-in home, chatting while preparing tea. Both at equal eye level, natural relaxed smiles, respectful independent older adult. Warm window daylight, cream curtains, subtle greenery, warm wood, realistic skin and hands, understated premium photography. Medium-wide composition showing both faces and upper bodies. No medical equipment, uniforms, hospital, logos, lettering or watermark. Save the final image in C:/dev/Elsie J's/public/images/care-at-home.png
+
+Workspace source: public/images/care-at-home.png
+Optimized website asset: public/images/care-at-home.webp
