@@ -33,7 +33,7 @@ test('Sales CTAs are reduced and each page keeps an obvious route to contact', a
     await page.goto(path);
     await expect(page.locator('main a.button')).toHaveCount(count);
     await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
-    for (const link of await page.locator('a[href^="mailto:"]').all()) await expect(link).toHaveAttribute('href', 'mailto:ashleahenneberry@elsiejhomecare.ca');
+    for (const link of await page.locator('a[href^="mailto:"]').all()) await expect(link).toHaveAttribute('href', 'mailto:ashlea.henneberry@elsiejhomecare.ca');
     const text = await page.locator('body').innerText();
     expect(text).not.toMatch(/Veterans Affairs|Veterans Independence Program|VAC approval|direct billing|government partnership/i);
     expect(text).not.toMatch(/[\u00c2\u00c3\u00e2\ufffd]|[\u0080-\u009f]/);

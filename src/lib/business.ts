@@ -4,7 +4,7 @@ import serviceData from './services.json';
 // Service wording is owner-supplied and preserved verbatim in services.json.
 export const business = {
   name: "Elsie J's Home Care",
-  legalName: '', phone: '', email: 'ashleahenneberry@elsiejhomecare.ca', address: '',
+  legalName: '', phone: '', email: 'ashlea.henneberry@elsiejhomecare.ca', address: '',
   serviceAreas: [] as string[], businessHours: '',
   socialLinks: [] as { label: string; url: string }[],
   founderName: '', founderStory: '',
