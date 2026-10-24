@@ -7,7 +7,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
 export const metadata: Metadata = {
   title: { default: `${business.name} | Personal Support at Home`, template: `%s | ${business.name}` },
-  description: 'Personal home care for seniors, adults who need extra support, and their families. A warm conversation about help at home starts here.',
+  description: 'Personal home care for seniors, adults who need extra support, and their families. Explore our services for everyday living, companionship, and family respite.',
   ...(business.siteUrl ? { metadataBase: new URL(business.siteUrl) } : {}),
   robots: { index: Boolean(business.siteUrl), follow: Boolean(business.siteUrl) },
 };

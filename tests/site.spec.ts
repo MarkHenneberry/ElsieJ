@@ -40,8 +40,10 @@ test('Desktop navigation, service anchors, and FAQ work', async ({ page }) => {
     await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: label, exact: true }).click();
     await expect(page).toHaveURL(`http://localhost:3000${path}`);
   }
-  await page.locator('a[href="/services#companionship"]').click();
-  await expect(page).toHaveURL(/services#companionship/);
+  await page.locator('.services-preview a[href="/services"]').click();
+  await page.getByRole('navigation', { name: 'Choose a service' }).getByRole('link', { name: 'Companion Care' }).click();
+  await expect(page).toHaveURL(/services#companion-care/);
+  await expect(page.locator('#companion-care h2')).toBeInViewport();
   await page.goto('/how-it-works');
   const question = page.locator('summary').first();
   await question.focus(); await page.keyboard.press('Enter');

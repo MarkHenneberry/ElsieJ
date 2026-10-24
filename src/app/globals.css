@@ -134,6 +134,22 @@ main:focus { outline:none; }
 .detailed.service-card p { font-size:18px; }
 .detailed.service-card .benefit { border-top:1px solid var(--border); padding-top:16px; color:var(--ink); font-size:16px; }
 .detailed-grid { grid-template-columns:repeat(2,1fr); }
+.service-index { scroll-margin-top:150px; margin-bottom:65px; }
+.service-index h2 { font-size:30px; margin-bottom:25px; }
+.service-index ul { list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.service-index a { background:#fff; border:1px solid var(--border); border-radius:12px; padding:17px 20px; min-height:68px; display:flex; align-items:center; justify-content:space-between; gap:15px; font-size:17px; font-weight:600; color:var(--purple); height:100%; }
+.service-index a:hover { background:var(--lilac); }
+.service-index a span { flex-shrink:0; }
+.service-detail { display:grid; grid-template-columns:260px minmax(0,1fr); gap:55px; padding-block:55px; border-top:1px solid var(--border); scroll-margin-top:145px; }
+.service-detail-heading h2 { font-size:30px; margin-top:22px; overflow-wrap:break-word; }
+.service-copy { max-width:740px; }
+.service-copy p,.service-copy li { color:var(--muted); font-size:18px; line-height:1.8; }
+.service-copy h3 { font-size:21px; letter-spacing:-.02em; margin-block:30px 16px; }
+.service-copy ul { list-style:disc; padding-left:25px; margin-block:20px 26px; }
+.service-copy li { padding-left:5px; margin-top:10px; }
+.service-back { margin-top:25px; }
+@media(max-width:900px) { .service-index ul { grid-template-columns:repeat(2,minmax(0,1fr)); } .service-detail { grid-template-columns:200px minmax(0,1fr); gap:30px; } }
+@media(max-width:767px) { .service-index { margin-bottom:40px; } .service-index ul { grid-template-columns:1fr; } .service-detail { grid-template-columns:1fr; gap:25px; padding-block:40px; scroll-margin-top:115px; } .service-detail-heading h2 { font-size:30px; margin-top:17px; } }
 .inline-invite { padding:35px; background:var(--cream); border-radius:12px; margin-top:35px; }
 .inline-invite p { color:var(--muted); margin:12px 0 20px; }
 .about-content { max-width:850px; }
