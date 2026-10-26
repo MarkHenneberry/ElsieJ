@@ -33,11 +33,12 @@ test('Sales CTAs are reduced and each page keeps an obvious route to contact', a
     await page.goto(path);
     await expect(page.locator('main a.button')).toHaveCount(count);
     await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
-    for (const link of await page.locator('a[href^="mailto:"]').all()) await expect(link).toHaveAttribute('href', 'mailto:ashlea.henneberry@elsiejhomecare.ca');
+    for (const link of await page.locator('a[href^="mailto:"]').all()) await expect(link).toHaveAttribute('href', 'mailto:info@elsiejhomecare.ca');
     const text = await page.locator('body').innerText();
     expect(text).not.toMatch(/Veterans Affairs|Veterans Independence Program|VAC approval|direct billing|government partnership/i);
     expect(text).not.toMatch(/[\u00c2\u00c3\u00e2\ufffd]|[\u0080-\u009f]/);
-    if (path !== '/services') expect((await page.locator('main').innerText()).match(/\bhelp\b/gi) || []).toHaveLength(0);
+    // The restored headline and the supplied FAQ answer each intentionally use "help" once.
+    if (path !== '/services') expect(((await page.locator('main').innerText()).match(/\bhelp\b/gi) || []).length).toBeLessThanOrEqual(1);
   }
   await page.goto('/');
   await expect(page.locator('.service-card')).toHaveCount(6);

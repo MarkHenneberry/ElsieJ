@@ -59,16 +59,28 @@ test('Mobile menu and keyboard focus work', async ({ page }) => {
   await expect(page).toHaveURL(/services$/); await expect(menu).toHaveAttribute('aria-expanded', 'false');
 });
 test('Form validates contact details and never reports an unsent enquiry as sent', async ({ page, request }) => {
+  // Keep this UI test unavailable even if a real delivery endpoint is configured.
+  await page.route('**/contact', async route => { const response = await route.fetch(); const html = await response.text(); await route.fulfill({ response, body: html.replaceAll('\\"available\\":true', '\\"available\\":false') }); });
   await page.goto('/contact'); await page.getByRole('button', { name: 'Send My Request' }).click();
   await expect(page.getByText('Please enter your name.')).toBeVisible(); await expect(page.getByLabel('Your Name', { exact: true })).toBeFocused();
+  await expect(page.getByText('Please enter your phone number.')).toBeVisible();
+  await expect(page.getByText('Please enter your email address.')).toBeVisible();
+  for (const label of ['Your Name', 'Phone Number', 'Email']) await expect(page.getByLabel(label, { exact: true })).toHaveAttribute('required', '');
   await page.getByLabel('Your Name', { exact: true }).fill('Test Visitor');
+  await page.getByLabel('Phone Number', { exact: true }).fill('9025550100');
   await page.getByLabel('Email', { exact: true }).fill('invalid'); await page.getByRole('button', { name: 'Send My Request' }).click();
   await expect(page.getByText('Please enter a valid email address.')).toBeVisible();
   await page.getByLabel('Email', { exact: true }).fill('test@example.com'); await page.getByRole('button', { name: 'Send My Request' }).click();
   await expect(page.locator('.form-error')).toContainText('Your request has not been sent.');
   await expect(page.getByText('Thank you for reaching out.')).not.toBeVisible();
   const bad = await request.post('/api/contact', { data: { name: '', email: 'invalid' } }); expect(bad.status()).toBe(400);
-  const unavailable = await request.post('/api/contact', { data: { name: 'Test', email: 'test@example.com' } }); expect(unavailable.status()).toBe(503);
+  // Server validation must require all three fields, independent of delivery configuration.
+  const validContact = { name: 'Test', phone: '9025550100', email: 'test@example.com' };
+  for (const field of ['name', 'phone', 'email'] as const) {
+    const missing = await request.post('/api/contact', { data: { ...validContact, [field]: ' ' } });
+    expect(missing.status()).toBe(400);
+    expect((await missing.json()).errors).toHaveProperty(field);
+  }
   const crossOrigin = await request.post('/api/contact', { headers: { Origin: 'https://another-site.example' }, data: { name: 'Test', email: 'test@example.com' } }); expect(crossOrigin.status()).toBe(403);
 });
 test('Contact UI renders success and delivery failure correctly with simulated delivery responses', async ({ page }) => {
@@ -76,7 +88,7 @@ test('Contact UI renders success and delivery failure correctly with simulated d
   await page.route('**/contact', async route => { const response = await route.fetch(); const html = await response.text(); await route.fulfill({ response, body: html.replaceAll('\\"available\\":false', '\\"available\\":true') }); });
   await page.route('**/api/contact', route => route.fulfill({ status: 502, json: { message: 'We could not send your request. Please try again.' } }));
   await page.goto('/contact');
-  await page.getByLabel('Your Name', { exact: true }).fill('Test Visitor'); await page.getByLabel('Email', { exact: true }).fill('test@example.com');
+  await page.getByLabel('Your Name', { exact: true }).fill('Test Visitor'); await page.getByLabel('Phone Number', { exact: true }).fill('9025550100'); await page.getByLabel('Email', { exact: true }).fill('test@example.com');
   await page.getByRole('button', { name: 'Send My Request' }).click(); await expect(page.locator('.form-error')).toContainText('We could not send');
   await page.route('**/api/contact', route => route.fulfill({ status: 200, json: { message: 'Your request has been sent.' } }));
   await page.getByRole('button', { name: 'Send My Request' }).click(); await expect(page.getByRole('status')).toContainText('Thank you for reaching out.');
