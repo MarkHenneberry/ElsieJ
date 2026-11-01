@@ -1,4 +1,5 @@
 import serviceData from './services.json';
+import { founderStory } from './about';
 
 // OWNER SETUP: empty values are intentional placeholders and are hidden in the UI.
 // Service wording is owner-supplied and preserved verbatim in services.json.
@@ -7,7 +8,7 @@ export const business = {
   legalName: '', phone: '', email: 'info@elsiejhomecare.ca', address: '',
   serviceAreas: [] as string[], businessHours: '',
   socialLinks: [] as { label: string; url: string }[],
-  founderName: '', founderStory: '',
+  founderName: '', founderStory: founderStory.join('\n\n'),
   servicesConfirmed: true,
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || '',
   images: {

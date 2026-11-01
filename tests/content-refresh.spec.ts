@@ -43,7 +43,9 @@ test('Sales CTAs are reduced and each page keeps an obvious route to contact', a
   await page.goto('/');
   await expect(page.locator('.service-card')).toHaveCount(6);
   await expect(page.locator('.service-card a')).toHaveCount(0);
-  await expect(page.locator('.process-section a, .why-section a, .family-section a')).toHaveCount(0);
+  await expect(page.locator('.process-section a, .family-section a')).toHaveCount(0);
+  await expect(page.locator('.why-section a')).toHaveCount(1);
+  await expect(page.getByRole('link', { name: 'Read Our Story', exact: true })).toHaveAttribute('href', '/about#our-story');
 });
 
 test('The photo set includes three distinct scenes in the existing image frames', async ({ page }) => {
